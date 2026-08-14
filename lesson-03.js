@@ -1,12 +1,37 @@
 'use strict';
 
 // Lesson 3: Promises, async, and await.
-// Standalone programs and observations go in this file as code and comments.
-// The loader work happens in stretch-records/script.js.
-//
-// Step 3, the ordering puzzle: write a program mixing plain logs, a zero
-// delay timer, and a settled Promise reaction. Predict the full output order
-// in comments before running, then explain in one sentence why the Promise
-// beat the timer.
-//
-// Step 6: paste the final rethrown message that reached the top.
+
+// Step 3: Ordering puzzle.
+
+// Prediction:
+// 1. one
+// 2. four
+// 3. three
+// 4. two
+
+console.log('one');
+
+setTimeout(() => {
+  console.log('two');
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log('three');
+});
+
+console.log('four');
+
+// Actual output:
+// 1. one
+// 2. four
+// 3. three
+// 4. two
+
+// The Promise callback beat the timer because the microtask queue always runs
+// before the task queue when the call stack becomes empty.
+
+// Step 6: Final rethrown message.
+
+// Artist page load failed while loading artists.
+// Required data is missing name.
