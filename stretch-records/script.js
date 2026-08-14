@@ -42,12 +42,26 @@ function loadArtistsWithPromises() {
   statusBox.textContent = 'Loading artists...';
 
   setTimeout(() => {
-    fetch('artists.json')
-      .then((response) => response.json())
+    fetch('http://localhost:3000/artists')
+      .then((response) => {
+        console.log('Response:', response);
+
+        // Step 4:
+        // fetch() does not reject on 404.
+        // We must check response.ok ourselves.
+
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+
+        return response.json();
+      })
       .then((artists) => {
         renderCards(artists);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error(error);
+
         statusBox.textContent = 'We could not load the artists.';
       })
       .finally(() => {
@@ -62,7 +76,11 @@ loadArtistsWithPromises();
 
 async function loadArtistsAsync() {
   try {
-    const response = await fetch('artists.json');
+    const response = await fetch('http://localhost:3000/artists');
+
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
 
     const artists = await response.json();
 
@@ -79,6 +97,7 @@ async function loadArtistsAsync() {
     }
   }
 }
+
 class MissingArtistDataError extends Error {
   constructor(field) {
     super(`Required data is missing ${field}`);
@@ -117,33 +136,21 @@ try {
   console.log(error.message);
 }
 
-const task1 = new Promise((resolve) =>
-  setTimeout(() => resolve('Artist 1'), 1000),
-);
+Promise.all([
+  fetch('http://localhost:3000/artists').then((response) => response.json()),
 
-const task2 = new Promise((resolve) =>
-  setTimeout(() => resolve('Artist 2'), 1500),
-);
+  fetch('http://localhost:3001/label').then((response) => response.json()),
+])
+  .then(([artists, label]) => {
+    console.log('Artists:', artists);
 
-const task3 = new Promise((resolve) =>
-  setTimeout(() => resolve('Artist 3'), 2000),
-);
+    console.log('Label:', label);
 
-Promise.all([task1, task2, task3]).then((result) => {
-  console.log('Promise.all:', result);
-});
-
-const failedTask = new Promise((resolve, reject) =>
-  setTimeout(() => reject('Failed'), 1000),
-);
-
-Promise.all([task1, failedTask, task3]).catch((error) => {
-  console.log('Promise.all failed:', error);
-});
-
-Promise.allSettled([task1, failedTask, task3]).then((result) => {
-  console.log('Promise.allSettled:', result);
-});
+    console.log(`${label.name} (${label.city}) - founded in ${label.founded}`);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
 const shuffleButton = document.querySelector('.shuffle');
 
@@ -162,24 +169,38 @@ const nameInput = document.querySelector('#artist-name');
 
 const genreInput = document.querySelector('#artist-genre');
 
-form.addEventListener('submit', (event) => {
+form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
-  const name = nameInput.value;
+  const name = nameInput.value.trim();
 
-  if (name) {
-    const genre = genreInput.value || 'Unsigned';
-
-    renderCards([
-      {
-        name: name,
-        genre: genre,
-        total: '0:00',
-      },
-    ]);
-
-    nameInput.value = '';
-
-    genreInput.value = '';
+  if (!name) {
+    return;
   }
+
+  const newArtist = {
+    name: name,
+    genre: genreInput.value || 'Unsigned',
+    total: '0:00',
+  };
+
+  const options = {
+    method: 'POST',
+
+    headers: {
+      'Content-Type': 'application/json',
+    },
+
+    body: JSON.stringify(newArtist),
+  };
+
+  const response = await fetch('http://localhost:3000/artists', options);
+
+  console.log('POST status:', response.status);
+
+  nameInput.value = '';
+
+  genreInput.value = '';
+
+  location.reload();
 });

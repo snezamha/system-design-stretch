@@ -1,38 +1,53 @@
-[
-  {
-    "name": "Pinkfong",
-    "genre": "Children's music",
-    "total": "11:31",
-    "photo": "images/pinkfong.jpeg"
-  },
-  {
-    "name": "Adriano Celentano",
-    "genre": "Italian pop",
-    "total": "20:52",
-    "photo": "images/adriano-celentano.jpg"
-  },
-  {
-    "name": "Asake",
-    "genre": "Afrobeats",
-    "total": "14:08",
-    "photo": "images/asake.jpg"
-  },
-  {
-    "name": "Miyagi and Andy Panda",
-    "genre": "Hip-hop",
-    "total": "16:21",
-    "photo": "images/miyagi-and-andy-panda.jpg"
-  },
-  {
-    "name": "Johnny Cash",
-    "genre": "Country",
-    "total": "15:40",
-    "photo": "images/johnny-cash.jpg"
-  },
-  {
-    "name": "Taylor Swift",
-    "genre": "Pop",
-    "total": "18:00",
-    "photo": "images/taylor-swift.jpg"
-  }
-]
+{
+  "artists": [
+    {
+      "name": "Pinkfong",
+      "genre": "Children's music",
+      "total": "11:31",
+      "photo": "images/pinkfong.jpeg",
+      "id": "WGLlKRDHLlg"
+    },
+    {
+      "name": "Adriano Celentano",
+      "genre": "Italian pop",
+      "total": "20:52",
+      "photo": "images/adriano-celentano.jpg",
+      "id": "041wxQ2QJZQ"
+    },
+    {
+      "name": "Asake",
+      "genre": "Afrobeats",
+      "total": "14:08",
+      "photo": "images/asake.jpg",
+      "id": "nKE7C5hAgc0"
+    },
+    {
+      "name": "Miyagi and Andy Panda",
+      "genre": "Hip-hop",
+      "total": "16:21",
+      "photo": "images/miyagi-and-andy-panda.jpg",
+      "id": "SuFgO6-DCvo"
+    },
+    {
+      "name": "Johnny Cash",
+      "genre": "Country",
+      "total": "15:40",
+      "photo": "images/johnny-cash.jpg",
+      "id": "-Z9LHQLpeIs"
+    },
+    {
+      "name": "Taylor Swift",
+      "genre": "Pop",
+      "total": "18:00",
+      "photo": "images/taylor-swift.jpg",
+      "id": "UIwJeQPNESA"
+    },
+    {
+      "name": "Test",
+      "genre": "Jazz",
+      "total": "0:00",
+      "id": "UzfBhjc2kmI"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
