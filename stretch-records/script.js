@@ -68,7 +68,15 @@ function renderCards(list) {
   }
 }
 
-renderCards(artists);
+const statusBox = document.querySelector('.status');
+
+statusBox.textContent = 'Loading artists...';
+
+setTimeout(() => {
+  statusBox.textContent = '';
+
+  renderCards(artists);
+}, 2000);
 
 // Shuffle: pick a random artist and feature them.
 const shuffleButton = document.querySelector('.shuffle');
@@ -79,6 +87,12 @@ shuffleButton.addEventListener('click', () => {
   document.querySelector('.featured').textContent =
     `Featured today: ${pick.name}`;
 });
+
+// const freezeButton = document.querySelector('.freeze');
+
+// freezeButton.addEventListener('click', () => {
+//   while (true) {}
+// });
 
 // The suggestion form: an empty submission does nothing, because an empty
 // string is falsy.
