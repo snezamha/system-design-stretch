@@ -12,10 +12,10 @@ Redundancy means running more than one server so that another server could conti
 
 ## Latency
 
-
-I stopped json-server while the page was open and reloaded the page and I saw the message: We could not load the artists, because the server was no longer running.
-A stopped server caused the entire system to fail.
-Redundancy means running more than one server so that another server could continue responding if one failed.
+I enabled the Slow 3G preset in the DevTools Network tab and reloaded the page.
+The page loaded in 4.22 seconds.
+While waiting, the page displayed the loading message before the artist cards were rendered.
+The delay between sending the request and receiving the response was latency.
 
 ## Caching
 
